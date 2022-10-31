@@ -26,5 +26,6 @@ fi
 killall mysqld
 sleep 5
 echo "[i] Ayarlamalar Bitti."
-
+service nginx start
+service php8.1-fpm start
 exec "$@"
