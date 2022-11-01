@@ -74,9 +74,11 @@ EXPOSE 3306 80
 
 CMD ["/usr/bin/mysqld_safe"]
 
-RUN rm -rf /usr/share/nginx/html
-
-COPY html /usr/share/nginx/html
+### wordpress install ###
+RUN rm -rf /usr/share/nginx/html/*
+RUN wget https://wordpress.org/latest.zip -P /usr/share/nginx/html/ && unzip /usr/share/nginx/html/latest.zip -d "/usr/share/nginx/html/"
+RUN mv /usr/share/nginx/html/wordpress/* /usr/share/nginx/html/ && rm -rf /usr/share/nginx/html/wordpress /usr/share/nginx/html/latest.zip
+### wordpress install ok###
 
 RUN chown -R www-data:www-data /var/cache/nginx \
 && chown -R www-data:www-data /var/log/nginx \
