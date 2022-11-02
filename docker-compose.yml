@@ -1,44 +1,44 @@
 version: '3.1'
 
 services:
+  # MySQL database service
+  db:
+    image: mysql:8.0
+    container_name: db
+    command: '--default-authentication-plugin=mysql_native_password'
+    secrets:
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_ROOT_PASSWORD
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    # PHP 8.1 FPM service
+  php-fpm:
+    image: php:8.1-fpm
+    container_name: php8.1-fpm
+    working_dir: /usr/share/nginx/html
+    volumes:
+    - nginx:/usr/share/nginx/html
   # Nginx service
   webserver:
     image: nginx
     container_name: webserver
     restart: unless-stopped
     ports:
-      - 80:80
+      - "80:80"
+      - "9000:9000"
     volumes:
-      - /usr/share/nginx/html
-      - /conf/nginx.conf:/etc/nginx/conf.d/nginx.conf
-  # PHP service
-  php:
-    image: php:8.1-fpm
-    volumes:
-    - /usr/share/nginx/html
-
-  # MySQL database service
-  db:
-    image: mysql:8.0
-    container_name: db
-    env_file: .env
-    restart: unless-stopped
-    command: '--default-authentication-plugin=mysql_native_password'
-    ports:
-      - "3306:3306"
-    volumes:
-      - dbdata:/var/lib/mysql
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: pma
+      - nginx:/usr/share/nginx/html
     links:
-      - db
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-      PMA_ARBITRARY: 1
-    restart: unless-stopped
-    ports:
-      - 8081:8081
+      - "php-fpm"
 volumes:
   dbdata:
+  nginx:
+  php-fpm:
+networks:
+  app-network:
+    driver: bridge
