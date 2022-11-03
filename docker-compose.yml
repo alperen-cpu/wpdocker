@@ -6,23 +6,33 @@ services:
     image: mysql:8.0
     container_name: db
     command: '--default-authentication-plugin=mysql_native_password'
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_pass
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: alperensah
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_pass
     secrets:
-      - MYSQL_DATABASE
-      - MYSQL_USER
-      - MYSQL_PASSWORD
-      - MYSQL_ROOT_PASSWORD
+      - mysql_root_pass
+      - mysql_pass
     restart: unless-stopped
     ports:
       - "3306:3306"
     volumes:
       - dbdata:/var/lib/mysql
+    networks:
+      app-network:  
     # PHP 8.1 FPM service
   php-fpm:
     image: php:8.1-fpm
     container_name: php8.1-fpm
     working_dir: /usr/share/nginx/html
+    ports:
+      - "9000:9000"
     volumes:
+    - php-fpm:/usr/local/etc/php-fpm.d/
     - nginx:/usr/share/nginx/html
+    networks:
+      app-network:
   # Nginx service
   webserver:
     image: nginx
@@ -30,11 +40,13 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
-      - "9000:9000"
     volumes:
       - nginx:/usr/share/nginx/html
+      - php-fpm:/usr/local/etc/php-fpm.d/
     links:
       - "php-fpm"
+    networks:
+      app-network:
 volumes:
   dbdata:
   nginx:
@@ -42,3 +54,8 @@ volumes:
 networks:
   app-network:
     driver: bridge
+secrets:
+  mysql_pass:
+    file: './mysql_pass'
+  mysql_root_pass:
+    file: './mysql_root_pass'       
