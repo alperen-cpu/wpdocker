@@ -7,17 +7,18 @@ services:
     image: mysql:8.0
     container_name: db
     command: '--default-authentication-plugin=mysql_native_password'
+    working_dir: /usr/share/nginx/html/
     environment:
-      MYSQL_DATABASE: "wordpress"
-      MYSQL_USER: "alperensah"
-    secrets:
-      - "mysql_root_pass"
-      - "mysql_pass"
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: alperensah
+      MYSQL_ROOT_PASSWORD: #
+      MYSQL_USER_PASSWORD: #
     restart: unless-stopped
     ports:
       - "3306:3306"
     volumes:
       - dbdata:/var/lib/mysql
+
 
   # PHP 8.1 FPM service
   php-fpm:
@@ -48,8 +49,10 @@ services:
       - nginx:/usr/share/nginx/html/
     depends_on:
     - php-fpm
+    - db
     links:
       - "php-fpm"
+      - "db"
 
 #Volumes      
 volumes:
