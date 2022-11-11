@@ -3,6 +3,3 @@
 
 <b>What is the WordPress?</b><br>
 WordPress is a free and open source blogging tool and a content management system (CMS) based on PHP and MySQL, which runs on a web hosting service.<br>
-
-
- 
