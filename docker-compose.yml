@@ -22,15 +22,15 @@ services:
 
   # PHP 8.1 FPM service
   php-fpm:
-    build: .
-    image: php:8.1-fpm
+    build: php/
+    #image: php:8.1-fpm
     container_name: php8.1-fpm
     restart: always
     working_dir: /usr/share/nginx/html/
     ports:
       - "9000:9000"
     volumes:
-      #- ./conf/settings.sh:/home/settings.sh
+      #- ./conf/settings.sh:/usr/local/etc/php-fpm.d/settings.sh
       - php-fpm:/usr/local/etc/php-fpm.d/
       - nginx:/usr/share/nginx/html/
     links:
@@ -42,9 +42,10 @@ services:
 
   # Nginx service
   webserver:
-    image: nginx
+    build: nginx/
+    #image: nginx
     container_name: nginx-webserver
-    command: chown -R www-data:www-data /usr/share/nginx/html
+    #working_dir: /usr/share/nginx/html/
     restart: always
     ports:
       - "80:80"
@@ -70,4 +71,4 @@ volumes:
 #Networks
 networks:
   default:
-    driver: bridge
+    driver: bridge  
