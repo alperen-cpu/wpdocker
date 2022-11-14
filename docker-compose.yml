@@ -9,10 +9,10 @@ services:
     command: '--default-authentication-plugin=mysql_native_password'
     working_dir: /usr/share/nginx/html/
     environment:
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: alperensah
-      MYSQL_ROOT_PASSWORD: pCdkejWjqNb8
-      MYSQL_USER_PASSWORD: pCdkejWjqNb8
+      MYSQL_DATABASE: 
+      MYSQL_USER: 
+      MYSQL_ROOT_PASSWORD: 
+      MYSQL_USER_PASSWORD: 
     restart: always
     ports:
       - "3306:3306"
@@ -26,7 +26,7 @@ services:
     #image: php:8.1-fpm
     container_name: php8.1-fpm
     restart: always
-    working_dir: /usr/share/nginx/html/
+    #working_dir: /usr/share/nginx/html/
     ports:
       - "9000:9000"
     volumes:

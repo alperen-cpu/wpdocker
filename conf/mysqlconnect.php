@@ -2,10 +2,10 @@
 # Fill our vars and run on cli
 # $ php -f db-connect-test.php
 
-$dbname = 'wordpress';
-$dbuser = 'alperensah';
-$dbpass = 'pCdkejWjqNb8';
-$dbhost = '192.168.2.102';
+$dbname = '';
+$dbuser = '';
+$dbpass = '';
+$dbhost = '';
 
 $link = mysqli_connect($dbhost, $dbuser, $dbpass) or die("Unable to Connect to '$dbhost'");
 mysqli_select_db($link, $dbname) or die("Could not open the db '$dbname'");

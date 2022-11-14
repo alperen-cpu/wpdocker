@@ -1,6 +1,6 @@
 FROM php:8.1-fpm
-COPY conf/settings.sh .
-RUN chmod +x conf/settings.sh && bash conf/settings.sh
+RUN sed -i 's/listen.owner \= www-data/listen.owner \= nginx/g' /usr/local/etc/php-fpm.d/www.conf
+RUN sed -i 's/listen.group \= www-data/listen.group \= nginx/g' /usr/local/etc/php-fpm.d/www.conf
 RUN apt-get update && apt-get install -y \
     libmagickwand-dev --no-install-recommends \
     && pecl install imagick
