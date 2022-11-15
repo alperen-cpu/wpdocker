@@ -7,6 +7,7 @@ LABEL build_date="15-11-2022"
 ENV PHP_VERSION=8.1 \
     MYSQL_VERSION=8.0.31-1debian11 \
     MYSQL_MAJOR=8.0 \
+    NGINX_VERSION=1.22.1 \
     vhome=/home/web/public_html \
     LANG=C.UTF-8
 #Requirements
@@ -41,7 +42,7 @@ http://nginx.org/packages/debian `lsb_release -cs` nginx" \
 RUN echo "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" > \ | tee /etc/apt/preferences.d/99nginx
 RUN cat /etc/apt/preferences.d/99nginx
 RUN apt-get -y update
-RUN apt-get -y install nginx
+RUN apt-get -y install nginx${NGINX_VERSION}
 RUN nginx -v
 #NGINX INSTALL FINISH
 ####################################################
@@ -93,7 +94,6 @@ RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 ####################################################
 #Other
 RUN sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && sed -i 's/^#Port 22/Port 22/g' /etc/ssh/sshd_config
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd-key.pem -out /etc/ssl/private/vsftpd-cert.pem    
 EXPOSE 22 21 3306 80 443
 CMD ["/docker-entrypoint.sh"]
 ####################################################
