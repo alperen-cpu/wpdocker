@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-  app:
+  web:
     image: wpdocker:v3
     secrets:
     - FTP_PASS
@@ -15,7 +15,7 @@ services:
     - "80:80"
     - "443:443"
     volumes:
-    - home:/home/
+    - home:/home
     - db:/var/lib/mysql
     dns:
     - 8.8.8.8
@@ -36,7 +36,9 @@ secrets:
     external: true
   SSH_PASS:
     external: true
-
+volumes:
+  home:
+  db:
 #echo "" | docker secret create MYSQL_ROOT_PWD -
 #echo "alperensah" | docker secret create MYSQL_USER -
 #echo "" | docker secret create MYSQL_USER_PWD -
