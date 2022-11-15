@@ -7,7 +7,7 @@ LABEL build_date="15-11-2022"
 ENV PHP_VERSION=8.1 \
     MYSQL_VERSION=8.0.31-1debian11 \
     MYSQL_MAJOR=8.0 \
-    NGINX_VERSION=1.22.1 \
+    #NGINX_VERSION=1.22.1 \
     vhome=/home/web/public_html \
     LANG=C.UTF-8
 #Requirements
@@ -42,7 +42,7 @@ http://nginx.org/packages/debian `lsb_release -cs` nginx" \
 RUN echo "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" > \ | tee /etc/apt/preferences.d/99nginx
 RUN cat /etc/apt/preferences.d/99nginx
 RUN apt-get -y update
-RUN apt-get -y install nginx${NGINX_VERSION}
+RUN apt-get -y install nginx
 RUN nginx -v
 #NGINX INSTALL FINISH
 ####################################################
