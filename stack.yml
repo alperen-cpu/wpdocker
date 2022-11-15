@@ -11,9 +11,7 @@ services:
     - MYSQL_USER_DB
     - SSH_PASS
   port:
-    - 22:22
     - 3306:3306
-    - 21:21
     - 80:80
     - 443:443
 volumes:
