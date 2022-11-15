@@ -1,0 +1,11 @@
+version: '3.8'
+
+
+
+#echo "" | docker secret create MYSQL_ROOT_PWD -
+#echo "alperensah" | docker secret create MYSQL_USER -
+#echo "" | docker secret create MYSQL_USER_PWD -
+#echo "alperendb" | docker secret create MYSQL_USER_DB -
+#echo "" | docker secret create FTP_PASS -
+#echo "alperensah" | docker secret create FTP_USER -
+#echo "" | docker secret create SSH_PASS -
