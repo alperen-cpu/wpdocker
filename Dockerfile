@@ -95,7 +95,7 @@ RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 #Other
 RUN sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && sed -i 's/^#Port 22/Port 22/g' /etc/ssh/sshd_config
 EXPOSE 22 21 3306 80 443
-CMD ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["mysqld" , "/usr/local/bin/docker-entrypoint.sh"]
 ####################################################
 VOLUME /home
 VOLUME /var/lib/mysql
