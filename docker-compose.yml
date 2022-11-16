@@ -4,14 +4,14 @@ services:
     image: wpdocker:v3
     env_file:
       - script/.env
-    #environment:
-    #  - FTP_PASS=/run/secrets/FTP_PASS
-    #  - FTP_USER=/run/secrets/FTP_USER
-    #  - MYSQL_ROOT_PWD=/run/secrets/MYSQL_ROOT_PWD
-    #  - MYSQL_USER=/run/secrets/MYSQL_USER
-    #  - MYSQL_USER_PWD=/run/secrets/MYSQL_USER_PWD
-    #  - MYSQL_USER_DB=/run/secrets/MYSQL_USER_DB
-    #  - SSH_PASS=/run/secrets/SSH_PASS
+    environment:
+      - FTP_PASS=pCdkejWjqNb8
+      - FTP_USER=alperensah
+      - MYSQL_ROOT_PWD=pCdkejWjqNb8
+      - MYSQL_USER=alperensah
+      - MYSQL_USER_PWD=pCdkejWjqNb8
+      - MYSQL_USER_DB=alperendb
+      - SSH_PASS=pCdkejWjqNb8
     ports:
     - "3306:3306"
     - "80:80"
