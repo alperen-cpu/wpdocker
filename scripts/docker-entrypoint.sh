@@ -1,14 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 ##### SECRET CONF #####
-MYSQL_ROOT_PWD="`cat /run/secrets/"$SECRET_NAME"_MYSQL_ROOT_PWD`"
-MYSQL_USER="`cat /run/secrets/"$SECRET_NAME"_MYSQL_USER`"
-MYSQL_USER_PWD="`cat /run/secrets/"$SECRET_NAME"_MYSQL_USER_PWD`"
-MYSQL_USER_DB="`cat /run/secrets/"$SECRET_NAME"_MYSQL_USER_DB`"
-FTP_PASS="`cat /run/secrets/"$SECRET_NAME"_FTP_PASS`"
-FTP_USER="`cat /run/secrets/"$SECRET_NAME"_FTP_USER`"
-SSH_PASS="`cat /run/secrets/"$SECRET_NAME"_SSH_PASS`"
+#MYSQL_ROOT_PWD="`cat /run/secrets/"$SECRET_NAME"_MYSQL_ROOT_PWD`"
+#MYSQL_USER="`cat /run/secrets/"$SECRET_NAME"_MYSQL_USER`"
+#MYSQL_USER_PWD="`cat /run/secrets/"$SECRET_NAME"_MYSQL_USER_PWD`"
+#MYSQL_USER_DB="`cat /run/secrets/"$SECRET_NAME"_MYSQL_USER_DB`"
+#FTP_PASS="`cat /run/secrets/"$SECRET_NAME"_FTP_PASS`"
+#FTP_USER="`cat /run/secrets/"$SECRET_NAME"_FTP_USER`"
+#SSH_PASS="`cat /run/secrets/"$SECRET_NAME"_SSH_PASS`"
 ##### SECRET CONF #####
 ##### MySQL CONF #####
 MYSQL_ROOT_PWD=${MYSQL_ROOT_PWD:-"mysql"}
