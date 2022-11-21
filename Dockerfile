@@ -96,7 +96,7 @@ COPY config/my.cnf /etc/mysql/
 COPY config/vsftpd.conf /etc/vsftpd.conf
 COPY scripts/docker-entrypoint.sh /usr/local/bin/
 RUN ln -s /usr/local/bin/docker-entrypoint.sh /entrypoint.sh
-RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ####################################################
 #Other
 RUN sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && sed -i 's/^#Port 22/Port 22/g' /etc/ssh/sshd_config
