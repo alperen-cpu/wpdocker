@@ -2,8 +2,8 @@ version: "3.7"
 services:
   web:
     image: wpdocker:v3
-    env_file:
-      - script/.env
+    # env_file:
+    #   - script/.env
     environment:
       - FTP_PASS=pCdkejWjqNb8
       - FTP_USER=alperensah

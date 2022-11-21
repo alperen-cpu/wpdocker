@@ -10,6 +10,15 @@ set -e
 #FTP_USER="`cat /run/secrets/"$SECRET_NAME"_FTP_USER`"
 #SSH_PASS="`cat /run/secrets/"$SECRET_NAME"_SSH_PASS`"
 ##### SECRET CONF #####
+##### Env CONF #####
+MYSQL_ROOT_PWD=pCdkejWjqNb8
+MYSQL_USER=alperensah
+MYSQL_USER_PWD=pCdkejWjqNb8
+MYSQL_USER_DB=alperendb
+FTP_PASS=pCdkejWjqNb8
+FTP_USER=alperensah
+SSH_PASS=pCdkejWjqNb8
+##### Env CONF #####
 ##### MySQL CONF #####
 MYSQL_ROOT_PWD=${MYSQL_ROOT_PWD:-"mysql"}
 MYSQL_USER=${MYSQL_USER:-""}
