@@ -64,6 +64,8 @@ RUN apt-get install -y php${PHP_VERSION} \
 #PHP INSTALL FINISH
 ####################################################
 #MYSQL INSTALL START
+RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
+RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
 RUN set -eux; \
 # gpg: key 3A79BD29: public key "MySQL Release Engineering <mysql-build@oss.oracle.com>" imported
 	key='859BE8D7C586F538430B19C2467B942D3A79BD29'; \
@@ -83,6 +85,10 @@ RUN apt-get update \
 	&& rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql /var/run/mysqld \
 	&& chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \
 	&& chmod 1777 /var/run/mysqld /var/lib/mysql
+RUN sed -i -e "$ a [client]\n\n[mysql]\n\n[mysqld]"  /etc/mysql/my.cnf && \
+	sed -i -e "s/\(\[client\]\)/\1\ndefault-character-set = utf8/g" /etc/mysql/my.cnf && \
+	sed -i -e "s/\(\[mysql\]\)/\1\ndefault-character-set = utf8/g" /etc/mysql/my.cnf && \
+	sed -i -e "s/\(\[mysqld\]\)/\1\ninit_connect='SET NAMES utf8'\ncharacter-set-server = utf8\ncollation-server=utf8_unicode_ci\nbind-address = 0.0.0.0/g" /etc/mysql/my.cnf    
 #MYSQL INSTALL FINISH
 ####################################################
 #Config Files
