@@ -5,7 +5,7 @@ LABEL build_date="15-11-2022"
 
 #Environment
 ENV PHP_VERSION=8.1 \
-    MYSQL_VERSION=8.0.31-1debian11 \
+    MYSQL_VERSION=8.0 \
     MYSQL_MAJOR=8.0 \
     #NGINX_VERSION=1.22.1 \
     vhome=/home/web/public_html \
