@@ -104,13 +104,13 @@ RUN set -eux; \
 	gpgconf --kill all; \
 	rm -rf "$GNUPGHOME"
 RUN echo 'deb [ signed-by=/etc/apt/keyrings/mysql.gpg ] http://repo.mysql.com/apt/debian/ bullseye mysql-8.0' > /etc/apt/sources.list.d/mysql.list
-RUN { \
-		echo mysql-community-server mysql-community-server/data-dir select ''; \
-		echo mysql-community-server mysql-community-server/root-pass password ''; \
-		echo mysql-community-server mysql-community-server/re-root-pass password ''; \
-		echo mysql-community-server mysql-community-server/remove-test-db select false; \
-	} | debconf-set-selections \
-	&& apt-get update \
+# RUN { \
+# 		echo mysql-community-server mysql-community-server/data-dir select ''; \
+# 		echo mysql-community-server mysql-community-server/root-pass password ''; \
+# 		echo mysql-community-server mysql-community-server/re-root-pass password ''; \
+# 		echo mysql-community-server mysql-community-server/remove-test-db select false; \
+# 	} | debconf-set-selections \
+RUN apt-get update \
 	&& apt-get install -y \
 		mysql-community-client="${MYSQL_VERSION}" \
 		mysql-community-server-core="${MYSQL_VERSION}" \
