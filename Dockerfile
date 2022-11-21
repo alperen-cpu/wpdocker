@@ -17,6 +17,8 @@ RUN apt-get update -y && apt-get upgrade -y \
     curl \
     nano \
     gnupg2 \
+    bzip2 \
+    gnupg dirmngr \
     software-properties-common \
     unzip \
     zip \
@@ -26,6 +28,9 @@ RUN apt-get update -y && apt-get upgrade -y \
     openssh-server \
     wget \
     htop \
+    perl \
+    xz-utils \
+    zstd \
     openssl \
     ca-certificates \
     apt-transport-https \
@@ -64,8 +69,31 @@ RUN apt-get install -y php${PHP_VERSION} \
 #PHP INSTALL FINISH
 ####################################################
 #MYSQL INSTALL START
-RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
-RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
+
+# RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
+# RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
+# RUN set -eux; \
+# # gpg: key 3A79BD29: public key "MySQL Release Engineering <mysql-build@oss.oracle.com>" imported
+# 	key='859BE8D7C586F538430B19C2467B942D3A79BD29'; \
+# 	export GNUPGHOME="$(mktemp -d)"; \
+# 	gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "$key"; \
+# 	mkdir -p /etc/apt/keyrings; \
+# 	gpg --batch --export "$key" > /etc/apt/keyrings/mysql.gpg; \
+# 	gpgconf --kill all; \
+# 	rm -rf "$GNUPGHOME"
+# RUN groupadd -r mysql && useradd -r -g mysql mysql
+# RUN echo 'deb [ signed-by=/etc/apt/keyrings/mysql.gpg ] http://repo.mysql.com/apt/debian/ bullseye mysql-8.0' > /etc/apt/sources.list.d/mysql.list
+# RUN apt-get update \
+# 	&& apt-get install -y \
+# 		mysql-community-client="${MYSQL_VERSION}" \
+# 		mysql-community-server-core="${MYSQL_VERSION}" \
+# 	&& rm -rf /var/lib/apt/lists/* \
+# 	&& rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql /var/run/mysqld \
+# 	&& chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \
+# 	&& chmod 1777 /var/run/mysqld /var/lib/mysql
+
+RUN groupadd -r mysql && useradd -r -g mysql mysql
+RUN mkdir /docker-entrypoint-initdb.d
 RUN set -eux; \
 # gpg: key 3A79BD29: public key "MySQL Release Engineering <mysql-build@oss.oracle.com>" imported
 	key='859BE8D7C586F538430B19C2467B942D3A79BD29'; \
@@ -75,20 +103,22 @@ RUN set -eux; \
 	gpg --batch --export "$key" > /etc/apt/keyrings/mysql.gpg; \
 	gpgconf --kill all; \
 	rm -rf "$GNUPGHOME"
-RUN groupadd -r mysql && useradd -r -g mysql mysql
 RUN echo 'deb [ signed-by=/etc/apt/keyrings/mysql.gpg ] http://repo.mysql.com/apt/debian/ bullseye mysql-8.0' > /etc/apt/sources.list.d/mysql.list
-RUN apt-get update \
+RUN { \
+		echo mysql-community-server mysql-community-server/data-dir select ''; \
+		echo mysql-community-server mysql-community-server/root-pass password ''; \
+		echo mysql-community-server mysql-community-server/re-root-pass password ''; \
+		echo mysql-community-server mysql-community-server/remove-test-db select false; \
+	} | debconf-set-selections \
+	&& apt-get update \
 	&& apt-get install -y \
 		mysql-community-client="${MYSQL_VERSION}" \
 		mysql-community-server-core="${MYSQL_VERSION}" \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql /var/run/mysqld \
 	&& chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \
+# ensure that /var/run/mysqld (used for socket and lock files) is writable regardless of the UID our mysqld instance ends up having at runtime
 	&& chmod 1777 /var/run/mysqld /var/lib/mysql
-RUN sed -i -e "$ a [client]\n\n[mysql]\n\n[mysqld]"  /etc/mysql/my.cnf && \
-	sed -i -e "s/\(\[client\]\)/\1\ndefault-character-set = utf8/g" /etc/mysql/my.cnf && \
-	sed -i -e "s/\(\[mysql\]\)/\1\ndefault-character-set = utf8/g" /etc/mysql/my.cnf && \
-	sed -i -e "s/\(\[mysqld\]\)/\1\ninit_connect='SET NAMES utf8'\ncharacter-set-server = utf8\ncollation-server=utf8_unicode_ci\nbind-address = 0.0.0.0/g" /etc/mysql/my.cnf    
 #MYSQL INSTALL FINISH
 ####################################################
 #Config Files
@@ -100,7 +130,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ####################################################
 #Other
 RUN sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && sed -i 's/^#Port 22/Port 22/g' /etc/ssh/sshd_config
-EXPOSE 22 21 3306 80 443
+EXPOSE 22 21 3306 33060 80 443
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD [ "/usr/bin/mysqld_safe" ]
 ####################################################
