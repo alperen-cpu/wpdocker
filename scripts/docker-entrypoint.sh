@@ -28,7 +28,7 @@ if [ -n "$MYSQL_USER_DB" ]; then
 #
 	if [ -n "$MYSQL_USER" ] && [ -n "$MYSQL_USER_PWD" ]; then
 	echo "[i] Yeni Kulanıcı Oluştur: $MYSQL_USER with password $MYSQL_USER_PWD for new database $MYSQL_USER_DB."
-	mysql --user=root --password=$MYSQL_ROOT_PWD -e "use $MYSQL_USER_DB;CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_USER_PWD';GRANT ALL PRIVILEGES ON $MYSQL_USER_DB.* TO '$MYSQL_USER'@'%';FLUSH PRIVILEGES;"
+	mysql --user=root --password=$MYSQL_ROOT_PWD -e "CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_USER_PWD';GRANT ALL PRIVILEGES ON $MYSQL_USER_DB.* TO '$MYSQL_USER'@'%';FLUSH PRIVILEGES;"
 	else
 	echo "[i] Yeni Kullanıcı Oluşturuldu."
 	fi
