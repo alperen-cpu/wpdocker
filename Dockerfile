@@ -91,7 +91,7 @@ RUN apt-get install -y php${PHP_VERSION} \
 # 	&& rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql /var/run/mysqld \
 # 	&& chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \
 # 	&& chmod 1777 /var/run/mysqld /var/lib/mysql
-RUN DEBIAN_FRONTEND=noninteractive
+#RUN DEBIAN_FRONTEND=noninteractive
 RUN groupadd -r mysql && useradd -r -g mysql mysql
 RUN mkdir /docker-entrypoint-initdb.d
 RUN set -eux; \
@@ -112,8 +112,8 @@ RUN echo 'deb [ signed-by=/etc/apt/keyrings/mysql.gpg ] http://repo.mysql.com/ap
 # 	} | debconf-set-selections \
 RUN apt-get update \
 	&& apt-get install -y \
-		mysql-community-client="${MYSQL_VERSION}" \
-		mysql-community-server-core="${MYSQL_VERSION}" \
+		mysql-community-client \
+		mysql-community-server-core \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& rm -rf /var/lib/mysql && mkdir -p /var/lib/mysql /var/run/mysqld \
 	&& chown -R mysql:mysql /var/lib/mysql /var/run/mysqld \
