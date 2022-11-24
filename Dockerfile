@@ -11,6 +11,8 @@ ENV PHP_VERSION=8.1 \
 ENV MYSQL_MAJOR 8.0
 ENV MYSQL_VERSION 8.0.31-1debian11
 ENV GOSU_VERSION 1.14
+ENV TZ=Asia/Istanbul \
+    DEBIAN_FRONTEND=noninteractive
 #Requirements
 RUN apt-get update -y && apt-get upgrade -y \
     && apt-get install -yq --no-install-recommends \
