@@ -10,6 +10,7 @@ ENV PHP_VERSION=8.1 \
     LANG=C.UTF-8
 ENV MYSQL_MAJOR 8.0
 ENV MYSQL_VERSION 8.0.31-1debian11
+ENV GOSU_VERSION 1.14
 #Requirements
 RUN apt-get update -y && apt-get upgrade -y \
     && apt-get install -yq --no-install-recommends \
@@ -75,7 +76,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends gnupg dirmngr &
 
 # add gosu for easy step-down from root
 # https://github.com/tianon/gosu/releases
-ENV GOSU_VERSION 1.14
+
 RUN set -eux; \
 	savedAptMark="$(apt-mark showmanual)"; \
 	apt-get update; \
@@ -95,8 +96,6 @@ RUN set -eux; \
 	chmod +x /usr/local/bin/gosu; \
 	gosu --version; \
 	gosu nobody true
-
-RUN mkdir /docker-entrypoint-initdb.d
 
 RUN set -eux; \
 	apt-get update; \
@@ -123,9 +122,6 @@ RUN set -eux; \
 	gpg --batch --export "$key" > /etc/apt/keyrings/mysql.gpg; \
 	gpgconf --kill all; \
 	rm -rf "$GNUPGHOME"
-
-ENV MYSQL_MAJOR 8.0
-ENV MYSQL_VERSION 8.0.31-1debian11
 
 RUN echo 'deb [ signed-by=/etc/apt/keyrings/mysql.gpg ] http://repo.mysql.com/apt/debian/ bullseye mysql-8.0' > /etc/apt/sources.list.d/mysql.list
 
