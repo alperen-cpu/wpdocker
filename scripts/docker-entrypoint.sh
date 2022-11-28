@@ -467,6 +467,11 @@ echo "root:${SSH_PASS}" | chpasswd
 function start-service () {
   exec /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
 }
+
+function run() {
+  start-service
+}
+
 run
 exec "$@"
 ##### SERVICE RUN #####
