@@ -3,7 +3,7 @@ FROM debian:bullseye-slim
 LABEL maintainer="bilgi@alperensah.com"
 LABEL build_date="15-11-2022"
 
-#Environment
+#Environmen
 ENV PHP_VERSION=8.1 \
     #NGINX_VERSION=1.22.1 \
     vhome=/home/web/public_html \
