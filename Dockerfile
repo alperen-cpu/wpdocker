@@ -150,6 +150,8 @@ RUN apt update && apt install -y supervisor
 COPY config/supervisord.conf /etc/supervisor/supervisord.conf
 COPY config/my.cnf /etc/mysql/
 COPY config/vsftpd.conf /etc/vsftpd.conf
+COPY config/nginx.conf /etc/nginx/conf.d/nginx.conf
+RUN rm -rf /etc/nginx/conf.d/default.conf
 COPY scripts/docker-entrypoint.sh /usr/local/bin/
 RUN ln -s /usr/local/bin/docker-entrypoint.sh /entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
