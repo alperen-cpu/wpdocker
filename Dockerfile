@@ -147,7 +147,7 @@ RUN apt update && apt install -y supervisor
 #Supervisor INSTALL FINISH
 ####################################################
 #Config Files
-COPY config/supervisord.conf /etc/supervisor/supervisord.conf
+COPY config/supervisord.conf /etc/supervisord.conf
 COPY config/my.cnf /etc/mysql/
 COPY config/vsftpd.conf /etc/vsftpd.conf
 COPY config/nginx.conf /etc/nginx/conf.d/nginx.conf
