@@ -13,7 +13,7 @@ set -e
 ##### Env CONF #####
 MYSQL_ROOT_PASSWORD=pCdkejWjqNb8
 MYSQL_USER=alperensah
-MYSQL_USER_PWD=pCdkejWjqNb8
+MYSQL_PASSWORD=pCdkejWjqNb8
 MYSQL_DATABASE=alperendb
 FTP_PASS=pCdkejWjqNb8
 FTP_USER=alperensah
