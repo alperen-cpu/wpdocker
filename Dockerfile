@@ -142,7 +142,12 @@ RUN { \
 	&& chmod 1777 /var/run/mysqld /var/lib/mysql
 #MYSQL INSTALL FINISH
 ####################################################
+#Supervisor INSTALL START
+RUN apt update && apt install -y supervisor
+#Supervisor INSTALL FINISH
+####################################################
 #Config Files
+COPY config/supervisord.conf /etc/supervisor/supervisord.conf
 COPY config/my.cnf /etc/mysql/
 COPY config/vsftpd.conf /etc/vsftpd.conf
 COPY scripts/docker-entrypoint.sh /usr/local/bin/

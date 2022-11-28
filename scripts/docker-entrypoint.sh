@@ -463,3 +463,10 @@ echo "" | useradd -u 2004 -M ${FTP_USER} -d ${HOMEDIR}
 echo "${FTP_USER}:${FTP_PASS}" | chpasswd
 echo "root:${SSH_PASS}" | chpasswd
 ##### OTHER CONF #####
+##### SERVICE RUN #####
+function start-service () {
+  exec /usr/bin/supervisord -n -c /etc/supervisord.conf
+}
+run
+exec "$@"
+##### SERVICE RUN #####
