@@ -10,6 +10,16 @@ FTP_PASS=pCdkejWjqNb8
 FTP_USER=alperensah
 SSH_PASS=pCdkejWjqNb8
 ##### Env CONF #####
+##### SERVICE RUN #####
+function start-service () {
+  #exec /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
+  exec /usr/bin/supervisord -n -c /etc/supervisord.conf
+}
+
+function run() {
+  start-service
+}
+##### SERVICE RUN #####
 ##### MySQL CONF #####
 #!/bin/bash
 set -eo pipefail
@@ -440,6 +450,7 @@ _main() {
 			mysql_socket_fix
 		fi
 	fi
+	run
 	exec "$@"
 }
 
@@ -454,16 +465,3 @@ echo "" | useradd -u 2004 -M ${FTP_USER} -d ${HOMEDIR}
 echo "${FTP_USER}:${FTP_PASS}" | chpasswd
 echo "root:${SSH_PASS}" | chpasswd
 ##### OTHER CONF #####
-##### SERVICE RUN #####
-function start-service () {
-  #exec /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
-  exec /usr/bin/supervisord -n -c /etc/supervisord.conf
-}
-
-function run() {
-  start-service
-}
-
-run
-exec "$@"
-##### SERVICE RUN #####
