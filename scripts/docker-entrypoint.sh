@@ -449,10 +449,10 @@ if ! _is_sourced; then
 fi
 ##### MySQL CONF #####
 ##### OTHER CONF #####
-ln -sf /usr/share/zoneinfo/Europe/Istanbul /etc/localtime
-echo "" | useradd -u 2004 -M ${FTP_USER} -d ${HOMEDIR}
-echo "${FTP_USER}:${FTP_PASS}" | chpasswd
-echo "root:${SSH_PASS}" | chpasswd
+#ln -sf /usr/share/zoneinfo/Europe/Istanbul /etc/localtime
+#echo "" | useradd -u 2004 -M ${FTP_USER} -d ${HOMEDIR}
+#echo "${FTP_USER}:${FTP_PASS}" | chpasswd
+#echo "root:${SSH_PASS}" | chpasswd
 ##### OTHER CONF #####
 ##### SERVICE RUN #####
 function start-service () {
