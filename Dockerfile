@@ -144,8 +144,10 @@ RUN { \
 ####################################################
 #Supervisor INSTALL START
 RUN apt update && apt install -y supervisor
+RUN touch /var/log/supervisor/supervisord.log
 RUN chmod 777 /var/log/supervisor/supervisord.log
-RUN chmod 777 /var/run/supervisor/
+#RUN chmod 777 /var/run/supervisor/
+## Permission denied: '/var/log/supervisor/supervisord.log'
 #Supervisor INSTALL FINISH
 ####################################################
 #Config Files
@@ -159,6 +161,9 @@ RUN ln -s /usr/local/bin/docker-entrypoint.sh /entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ####################################################
 #Other
+#
+RUN useradd -ms /bin/bash superuser
+#
 RUN sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && sed -i 's/^#Port 22/Port 22/g' /etc/ssh/sshd_config
 EXPOSE 22 21 3306 33060 80 443
 ENTRYPOINT ["docker-entrypoint.sh"]
