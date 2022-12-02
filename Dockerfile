@@ -164,6 +164,8 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 #
 RUN useradd -ms /bin/bash superuser
 #
+RUN chown -R superuser:superuser /var/log/supervisor
+RUN chmod 600 /var/log/supervisor
 RUN sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && sed -i 's/^#Port 22/Port 22/g' /etc/ssh/sshd_config
 EXPOSE 22 21 3306 33060 80 443
 ENTRYPOINT ["docker-entrypoint.sh"]
