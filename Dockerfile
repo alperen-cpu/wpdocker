@@ -143,6 +143,8 @@ RUN { \
 #MYSQL INSTALL FINISH
 ####################################################
 #Config Files
+RUN sed -i 's/listen.owner \= www-data/listen.owner \= nginx/g' /etc/php/8.1/fpm/pool.d/www.conf
+RUN sed -i 's/listen.group \= www-data/listen.group \= nginx/g' /etc/php/8.1/fpm/pool.d/www.conf
 COPY config/my.cnf /etc/mysql/
 COPY config/vsftpd.conf /etc/vsftpd.conf
 COPY config/nginx.conf /etc/nginx/conf.d/nginx.conf
@@ -152,10 +154,11 @@ RUN ln -s /usr/local/bin/docker-entrypoint.sh /entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ####################################################
 #Other
-RUN rm -rf /var/log/nginx
-RUN mkdir /var/log/nginx
-RUN touch /var/log/nginx/error.log
-RUN chown -R www-data:www-data /var/log/nginx
+#RUN rm -rf /var/log/nginx
+#RUN mkdir /var/log/nginx
+#RUN chown -R www-data:www-data /var/log/nginx
+RUN service php8.1-fpm start
+RUN service nginx start
 RUN sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && sed -i 's/^#Port 22/Port 22/g' /etc/ssh/sshd_config
 EXPOSE 22 21 3306 33060 80 443
 ENTRYPOINT ["docker-entrypoint.sh"]
