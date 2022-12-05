@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e
-
+service php8.1-fpm start
+service nginx start
 ##### Env CONF #####
 MYSQL_ROOT_PASSWORD=pCdkejWjqNb8
 MYSQL_USER=alperensah
@@ -455,7 +456,5 @@ fi
 #echo "root:${SSH_PASS}" | chpasswd
 ##### OTHER CONF #####
 ##### SERVICE RUN #####
-service php8.1-fpm start
-service nginx start
 exec "$@"
 ##### SERVICE RUN #####
