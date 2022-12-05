@@ -456,8 +456,8 @@ fi
 ##### OTHER CONF #####
 ##### SERVICE RUN #####
 function start-service () {
-  service nginx start
   service php8.1-fpm start
+  service nginx start
 }
 
 function run() {

@@ -52,6 +52,7 @@ RUN cat /etc/apt/preferences.d/99nginx
 RUN apt-get -y update
 RUN apt-get -y install nginx
 RUN nginx -v
+RUN chown -R www-data:www-data /var/log/nginx
 #NGINX INSTALL FINISH
 ####################################################
 #PHP INSTALL START
