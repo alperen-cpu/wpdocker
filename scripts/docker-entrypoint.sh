@@ -456,8 +456,8 @@ fi
 ##### OTHER CONF #####
 ##### SERVICE RUN #####
 function start-service () {
-  #exec /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
-  /usr/bin/supervisord -n -c /etc/supervisor/conf.d/supervisord.conf
+  service nginx start
+  service php8.1-fpm start
 }
 
 function run() {
