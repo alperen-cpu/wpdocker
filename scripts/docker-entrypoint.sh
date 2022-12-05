@@ -455,15 +455,7 @@ fi
 #echo "root:${SSH_PASS}" | chpasswd
 ##### OTHER CONF #####
 ##### SERVICE RUN #####
-function start-service () {
-  service php8.1-fpm start
-  service nginx start
-}
-
-function run() {
-  start-service
-}
-
-run
+service php8.1-fpm start
+service nginx start
 exec "$@"
 ##### SERVICE RUN #####
