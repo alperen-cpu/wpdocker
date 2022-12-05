@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
 set -e
-service php8.1-fpm start
-service nginx start
 ##### Env CONF #####
-MYSQL_ROOT_PASSWORD=pCdkejWjqNb8
-MYSQL_USER=alperensah
-MYSQL_PASSWORD=pCdkejWjqNb8
-MYSQL_DATABASE=alperendb
-FTP_PASS=pCdkejWjqNb8
-FTP_USER=alperensah
-SSH_PASS=pCdkejWjqNb8
+MYSQL_ROOT_PASSWORD=
+MYSQL_USER=
+MYSQL_PASSWORD=
+MYSQL_DATABASE=
+FTP_PASS=
+FTP_USER=
+SSH_PASS=
 ##### Env CONF #####
 ##### MySQL CONF #####
 #!/bin/bash

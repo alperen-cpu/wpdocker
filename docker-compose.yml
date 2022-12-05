@@ -1,17 +1,17 @@
 version: "3.7"
 services:
   web:
-    image: test1
+    image: nginx-php-mysql
     # env_file:
     #   - script/.env
     environment:
-      - FTP_PASS=pCdkejWjqNb8
-      - FTP_USER=alperensah
-      - MYSQL_ROOT_PASSWORD=pCdkejWjqNb8
-      - MYSQL_USER=alperensah
-      - MYSQL_PASSWORD=pCdkejWjqNb8
-      - MYSQL_DATABASE=alperendb
-      - SSH_PASS=pCdkejWjqNb8
+      - FTP_PASS=
+      - FTP_USER=
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_USER=
+      - MYSQL_PASSWORD=
+      - MYSQL_DATABASE=
+      - SSH_PASS=
     ports:
     - "3306:3306"
     - "80:80"
